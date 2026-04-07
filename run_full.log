@@ -1,0 +1,54 @@
+=== IEEE-CIS Fraud Features — Chronon Eval ===
+Agent: slick-quetzal | Team: ieee_fraud_slick_quetzal
+
+[1/6] Uploading Chronon definitions (team: ieee_fraud_slick_quetzal)...
+  Uploaded group_bys/ieee_fraud_slick_quetzal/transaction_features.py
+  Uploaded joins/ieee_fraud_slick_quetzal/fraud_features.py
+
+[2/6] Compiling join definition...
+Do you want to update existing env variables in these files? [Y/n]:                 Join Team - [34mieee_fraud_slick_quetzal[0m
+                Join Name - [34mfraud_features.v1[0m
+          Writing Join to - [34m/srv/chronon/production/joins/ieee_fraud_slick_quetzal/fraud_features.v1[0m
+[33m(preserving existing modeToEnvMap)[0m
+             GroupBy Team - [34mieee_fraud[0m
+             GroupBy Name - [34mtransaction_features.v1[0m
+       Writing GroupBy to - [34m/srv/chronon/production/group_bys/ieee_fraud/transaction_features.v1[0m
+[33m(preserving existing modeToEnvMap)[0m
+Successfully wrote 1 GroupBy objects to /srv/chronon/production
+Successfully wrote 1 Join objects to /srv/chronon/production
+
+[3/6] Running Spark backfill (this may take several minutes)...
+	at org.apache.spark.util.collection.unsafe.sort.UnsafeExternalSorter$SpillableIterator.loadNext(UnsafeExternalSorter.java:658)
+	at org.apache.spark.sql.execution.UnsafeExternalRowSorter$1.advanceNext(UnsafeExternalRowSorter.java:187)
+	at org.apache.spark.sql.execution.RowIteratorToScala.hasNext(RowIterator.scala:68)
+	at org.apache.spark.sql.catalyst.expressions.GeneratedClass$GeneratedIteratorForCodegenStage2.processNext(Unknown Source)
+	at org.apache.spark.sql.execution.BufferedRowIterator.hasNext(BufferedRowIterator.java:43)
+	at org.apache.spark.sql.execution.WholeStageCodegenExec$$anon$1.hasNext(WholeStageCodegenExec.scala:755)
+	at scala.collection.Iterator$$anon$10.hasNext(Iterator.scala:458)
+	at org.apache.spark.sql.execution.datasources.FileFormatWriter$.$anonfun$executeTask$1(FileFormatWriter.scala:277)
+	at org.apache.spark.util.Utils$.tryWithSafeFinallyAndFailureCallbacks(Utils.scala:1473)
+	at org.apache.spark.sql.execution.datasources.FileFormatWriter$.executeTask(FileFormatWriter.scala:286)
+	at org.apache.spark.sql.execution.datasources.FileFormatWriter$.$anonfun$write$15(FileFormatWriter.scala:210)
+	at org.apache.spark.scheduler.ResultTask.runTask(ResultTask.scala:90)
+	at org.apache.spark.scheduler.Task.run(Task.scala:131)
+	at org.apache.spark.executor.Executor$TaskRunner.$anonfun$run$3(Executor.scala:497)
+	at org.apache.spark.util.Utils$.tryWithSafeFinally(Utils.scala:1439)
+	at org.apache.spark.executor.Executor$TaskRunner.run(Executor.scala:500)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:750)
+26/04/07 07:31:39 INFO InternalParquetRecordWriter: Flushing mem columnStore to file. allocated memory: 152
+26/04/07 07:31:39 ERROR FileFormatWriter: Job job_202604070731386594523041918645799_0027 aborted.
+26/04/07 07:31:39 INFO Executor: Executor interrupted and killed task 58.0 in stage 27.0 (TID 1107), reason: Stage cancelled
+26/04/07 07:31:39 INFO MemoryStore: MemoryStore cleared
+26/04/07 07:31:39 INFO BlockManager: BlockManager stopped
+26/04/07 07:31:39 INFO BlockManagerMaster: BlockManagerMaster stopped
+26/04/07 07:31:39 INFO OutputCommitCoordinator$OutputCommitCoordinatorEndpoint: OutputCommitCoordinator stopped!
+26/04/07 07:31:39 INFO SparkContext: Successfully stopped SparkContext
+26/04/07 07:31:39 INFO ShutdownHookManager: Shutdown hook called
+26/04/07 07:31:39 INFO ShutdownHookManager: Deleting directory /tmp/spark-c02d869c-337d-4bbe-a8a3-24b5b64b7225
+26/04/07 07:31:39 INFO ShutdownHookManager: Deleting directory /tmp/spark-79897b8c-d804-4aee-bf3b-3441520522e9
+
+[4/6] Exporting backfilled features...
+ERROR: No backfill output found for team ieee_fraud_slick_quetzal
+Searched for: ieee_fraud_slick_quetzal_fraud_features_v1

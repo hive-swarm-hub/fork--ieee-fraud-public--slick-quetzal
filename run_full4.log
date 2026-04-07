@@ -1,0 +1,87 @@
+=== IEEE-CIS Fraud Features — Chronon Eval ===
+Agent: slick-quetzal | Team: ieee_fraud_slick_quetzal
+
+[1/6] Uploading Chronon definitions (team: ieee_fraud_slick_quetzal)...
+  Uploaded group_bys/ieee_fraud_slick_quetzal/transaction_features.py
+  Uploaded joins/ieee_fraud_slick_quetzal/fraud_features.py
+
+[2/6] Compiling join definition...
+Do you want to update existing env variables in these files? [Y/n]:                 Join Team - [34mieee_fraud_slick_quetzal[0m
+                Join Name - [34mfraud_features.v1[0m
+          Writing Join to - [34m/srv/chronon/production/joins/ieee_fraud_slick_quetzal/fraud_features.v1[0m
+[33m(preserving existing modeToEnvMap)[0m
+             GroupBy Team - [34mieee_fraud[0m
+             GroupBy Name - [34mtransaction_features.v1[0m
+       Writing GroupBy to - [34m/srv/chronon/production/group_bys/ieee_fraud/transaction_features.v1[0m
+[33m(preserving existing modeToEnvMap)[0m
+Successfully wrote 1 GroupBy objects to /srv/chronon/production
+Successfully wrote 1 Join objects to /srv/chronon/production
+
+[3/6] Running Spark backfill (this may take several minutes)...
+ ieee_fraud_transaction_features_v1_TransactionAmt_sum_3d      | 6692.9             
+ ieee_fraud_transaction_features_v1_TransactionAmt_sum_7d      | 12826.400000000001 
+ ieee_fraud_transaction_features_v1_TransactionAmt_sum_14d     | 25786.034          
+ ieee_fraud_transaction_features_v1_TransactionAmt_sum_30d     | 30484.764000000003 
+ ieee_fraud_transaction_features_v1_TransactionAmt_count_3d    | 26                 
+ ieee_fraud_transaction_features_v1_TransactionAmt_count_7d    | 54                 
+ ieee_fraud_transaction_features_v1_TransactionAmt_count_14d   | 103                
+ ieee_fraud_transaction_features_v1_TransactionAmt_count_30d   | 124                
+ ieee_fraud_transaction_features_v1_TransactionAmt_average_3d  | 257.41923076923075 
+ ieee_fraud_transaction_features_v1_TransactionAmt_average_7d  | 237.52592592592595 
+ ieee_fraud_transaction_features_v1_TransactionAmt_average_14d | 250.34984466019418 
+ ieee_fraud_transaction_features_v1_TransactionAmt_average_30d | 245.84487096774197 
+ ds                                                            | 2017-12-23         
+only showing top 3 rows
+
+26/04/07 07:35:27 INFO Driver$JoinBackfill$: 
+Showing three rows of output above.
+Query table `ieee_fraud.ieee_fraud_slick_quetzal_fraud_features_v1` for more.
+
+26/04/07 07:35:27 INFO SparkContext: Invoking stop() from shutdown hook
+26/04/07 07:35:27 INFO SparkUI: Stopped Spark web UI at http://2b40b8568d01:4042
+26/04/07 07:35:27 INFO MapOutputTrackerMasterEndpoint: MapOutputTrackerMasterEndpoint stopped!
+26/04/07 07:35:27 INFO MemoryStore: MemoryStore cleared
+26/04/07 07:35:27 INFO BlockManager: BlockManager stopped
+26/04/07 07:35:27 INFO BlockManagerMaster: BlockManagerMaster stopped
+26/04/07 07:35:27 INFO OutputCommitCoordinator$OutputCommitCoordinatorEndpoint: OutputCommitCoordinator stopped!
+26/04/07 07:35:27 INFO SparkContext: Successfully stopped SparkContext
+26/04/07 07:35:27 INFO ShutdownHookManager: Shutdown hook called
+26/04/07 07:35:27 INFO ShutdownHookManager: Deleting directory /tmp/spark-5e8752af-ae2e-4d3b-ab0d-804a30ade2db
+26/04/07 07:35:27 INFO ShutdownHookManager: Deleting directory /tmp/spark-9f0d9bfb-2202-4b59-a06c-6285b7c626d0
+
+[4/6] Exporting backfilled features...
+Reading from: /opt/spark/data/ieee_fraud.db/ieee_fraud_slick_quetzal_fraud_features_v1
+Loaded 590540 rows, 19 columns
+Columns: ['card1', 'isFraud', 'ts', 'TransactionDT', 'TransactionAmt', 'TransactionID', 'ieee_fraud_transaction_features_v1_TransactionAmt_sum_3d', 'ieee_fraud_transaction_features_v1_TransactionAmt_sum_7d', 'ieee_fraud_transaction_features_v1_TransactionAmt_sum_14d', 'ieee_fraud_transaction_features_v1_TransactionAmt_sum_30d', 'ieee_fraud_transaction_features_v1_TransactionAmt_count_3d', 'ieee_fraud_transaction_features_v1_TransactionAmt_count_7d', 'ieee_fraud_transaction_features_v1_TransactionAmt_count_14d', 'ieee_fraud_transaction_features_v1_TransactionAmt_count_30d', 'ieee_fraud_transaction_features_v1_TransactionAmt_average_3d', 'ieee_fraud_transaction_features_v1_TransactionAmt_average_7d', 'ieee_fraud_transaction_features_v1_TransactionAmt_average_14d', 'ieee_fraud_transaction_features_v1_TransactionAmt_average_30d', 'ds']
+Exported to /tmp/fraud_features_slick_quetzal.csv
+
+[5/6] Training Lasso and scoring on server...
+Loading backfilled features...
+  590540 rows, 19 columns
+  Fraud rate: 0.0350
+  Feature columns: 13
+  Train: 442905 rows (0.0351 fraud rate)
+  Test:  147635 rows (0.0345 fraud rate)
+Training Lasso...
+
+Top features by |coefficient|:
+  1. ieee_fraud_transaction_features_v1_TransactionAmt_sum_30d: 0.2843
+  2. ieee_fraud_transaction_features_v1_TransactionAmt_count_14d: 0.2252
+  3. ieee_fraud_transaction_features_v1_TransactionAmt_average_30d: -0.1960
+  4. ieee_fraud_transaction_features_v1_TransactionAmt_count_30d: -0.1782
+  5. ieee_fraud_transaction_features_v1_TransactionAmt_sum_7d: -0.1516
+  6. ieee_fraud_transaction_features_v1_TransactionAmt_sum_14d: -0.1459
+  7. ieee_fraud_transaction_features_v1_TransactionAmt_sum_3d: -0.1104
+  8. ieee_fraud_transaction_features_v1_TransactionAmt_average_14d: 0.0953
+  9. TransactionAmt: 0.0823
+  10. ieee_fraud_transaction_features_v1_TransactionAmt_average_3d: 0.0604
+
+Elapsed: 82.9s
+---
+auc_pr:           0.041911
+n_features:       13
+n_nonzero:        13
+train_auc_pr:     0.041596
+
+[6/6] Results:
+Score appended to results.tsv

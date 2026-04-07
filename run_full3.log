@@ -1,0 +1,77 @@
+=== IEEE-CIS Fraud Features — Chronon Eval ===
+Agent: slick-quetzal | Team: ieee_fraud_slick_quetzal
+
+[1/6] Uploading Chronon definitions (team: ieee_fraud_slick_quetzal)...
+  Uploaded group_bys/ieee_fraud_slick_quetzal/transaction_features.py
+  Uploaded joins/ieee_fraud_slick_quetzal/fraud_features.py
+
+[2/6] Compiling join definition...
+Do you want to update existing env variables in these files? [Y/n]:                 Join Team - [34mieee_fraud_slick_quetzal[0m
+                Join Name - [34mfraud_features.v1[0m
+          Writing Join to - [34m/srv/chronon/production/joins/ieee_fraud_slick_quetzal/fraud_features.v1[0m
+[33m(preserving existing modeToEnvMap)[0m
+             GroupBy Team - [34mieee_fraud[0m
+             GroupBy Name - [34mtransaction_features.v1[0m
+       Writing GroupBy to - [34m/srv/chronon/production/group_bys/ieee_fraud/transaction_features.v1[0m
+[33m(preserving existing modeToEnvMap)[0m
+Successfully wrote 1 GroupBy objects to /srv/chronon/production
+Successfully wrote 1 Join objects to /srv/chronon/production
+
+[3/6] Running Spark backfill (this may take several minutes)...
+	at org.apache.spark.SparkContext$.getOrCreate(SparkContext.scala:2678)
+	at org.apache.spark.sql.SparkSession$Builder.$anonfun$getOrCreate$2(SparkSession.scala:942)
+	at scala.Option.getOrElse(Option.scala:189)
+	at org.apache.spark.sql.SparkSession$Builder.getOrCreate(SparkSession.scala:936)
+	at ai.chronon.spark.SparkSessionBuilder$.build(SparkSessionBuilder.scala:133)
+	at ai.chronon.spark.Driver$OfflineSubcommand.buildSparkSession(Driver.scala:252)
+	at ai.chronon.spark.Driver$OfflineSubcommand.buildSparkSession$(Driver.scala:210)
+	at ai.chronon.spark.Driver$JoinBackfill$Args.buildSparkSession(Driver.scala:341)
+	at ai.chronon.spark.Driver$OfflineSubcommand.sparkSession(Driver.scala:202)
+	at ai.chronon.spark.Driver$OfflineSubcommand.sparkSession$(Driver.scala:202)
+	at ai.chronon.spark.Driver$JoinBackfill$Args.sparkSession$lzycompute(Driver.scala:341)
+	at ai.chronon.spark.Driver$JoinBackfill$Args.sparkSession(Driver.scala:341)
+	at ai.chronon.spark.Driver$OfflineSubcommand.buildTableUtils(Driver.scala:258)
+	at ai.chronon.spark.Driver$OfflineSubcommand.buildTableUtils$(Driver.scala:257)
+	at ai.chronon.spark.Driver$JoinBackfill$Args.buildTableUtils(Driver.scala:341)
+	at ai.chronon.spark.Driver$JoinBackfill$.run(Driver.scala:365)
+	at ai.chronon.spark.Driver$.main(Driver.scala:1069)
+	at ai.chronon.spark.Driver.main(Driver.scala)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.apache.spark.deploy.JavaMainApplication.start(SparkApplication.scala:52)
+	at org.apache.spark.deploy.SparkSubmit.org$apache$spark$deploy$SparkSubmit$$runMain(SparkSubmit.scala:951)
+	at org.apache.spark.deploy.SparkSubmit.doRunMain$1(SparkSubmit.scala:180)
+	at org.apache.spark.deploy.SparkSubmit.submit(SparkSubmit.scala:203)
+	at org.apache.spark.deploy.SparkSubmit.doSubmit(SparkSubmit.scala:90)
+	at org.apache.spark.deploy.SparkSubmit$$anon$2.doSubmit(SparkSubmit.scala:1030)
+	at org.apache.spark.deploy.SparkSubmit$.main(SparkSubmit.scala:1039)
+	at org.apache.spark.deploy.SparkSubmit.main(SparkSubmit.scala)
+
+[4/6] Exporting backfilled features...
+Reading from: /opt/spark/data/ieee_fraud.db/ieee_fraud_slick_quetzal_fraud_features_v1
+Loaded 223738 rows, 19 columns
+Columns: ['card1', 'isFraud', 'ts', 'TransactionDT', 'TransactionAmt', 'TransactionID', 'ieee_fraud_transaction_features_v1_TransactionAmt_sum_3d', 'ieee_fraud_transaction_features_v1_TransactionAmt_sum_7d', 'ieee_fraud_transaction_features_v1_TransactionAmt_sum_14d', 'ieee_fraud_transaction_features_v1_TransactionAmt_sum_30d', 'ieee_fraud_transaction_features_v1_TransactionAmt_count_3d', 'ieee_fraud_transaction_features_v1_TransactionAmt_count_7d', 'ieee_fraud_transaction_features_v1_TransactionAmt_count_14d', 'ieee_fraud_transaction_features_v1_TransactionAmt_count_30d', 'ieee_fraud_transaction_features_v1_TransactionAmt_average_3d', 'ieee_fraud_transaction_features_v1_TransactionAmt_average_7d', 'ieee_fraud_transaction_features_v1_TransactionAmt_average_14d', 'ieee_fraud_transaction_features_v1_TransactionAmt_average_30d', 'ds']
+Exported to /tmp/fraud_features_slick_quetzal.csv
+
+[5/6] Training Lasso and scoring on server...
+Loading backfilled features...
+  223738 rows, 19 columns
+  Fraud rate: 0.0312
+  Feature columns: 13
+  Train: 223738 rows (0.0312 fraud rate)
+/tmp/train_score_slick_quetzal.py:71: RuntimeWarning: Mean of empty slice.
+  print(f"  Test:  {X_test.shape[0]} rows ({y_test.mean():.4f} fraud rate)")
+/usr/local/lib/python3.10/dist-packages/numpy/_core/_methods.py:145: RuntimeWarning: invalid value encountered in scalar divide
+  ret = ret.dtype.type(ret / rcount)
+  Test:  0 rows (nan fraud rate)
+ERROR: No test rows. Check TransactionDT split cutoff.
+---
+auc_pr:           0.000000
+n_features:       0
+n_nonzero:        0
+train_auc_pr:     0.000000
+
+[6/6] Results:
+Score appended to results.tsv

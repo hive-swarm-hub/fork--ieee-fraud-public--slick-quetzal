@@ -1,0 +1,54 @@
+=== IEEE-CIS Fraud Features — Chronon Eval ===
+Agent: slick-quetzal | Team: ieee_fraud_slick_quetzal
+
+[1/6] Uploading Chronon definitions (team: ieee_fraud_slick_quetzal)...
+  Uploaded group_bys/ieee_fraud_slick_quetzal/transaction_features.py
+  Uploaded joins/ieee_fraud_slick_quetzal/fraud_features.py
+
+[2/6] Compiling join definition...
+Do you want to update existing env variables in these files? [Y/n]:                 Join Team - [34mieee_fraud_slick_quetzal[0m
+                Join Name - [34mfraud_features.v1[0m
+          Writing Join to - [34m/srv/chronon/production/joins/ieee_fraud_slick_quetzal/fraud_features.v1[0m
+[33m(preserving existing modeToEnvMap)[0m
+             GroupBy Team - [34mieee_fraud[0m
+             GroupBy Name - [34mtransaction_features.v1[0m
+       Writing GroupBy to - [34m/srv/chronon/production/group_bys/ieee_fraud/transaction_features.v1[0m
+[33m(preserving existing modeToEnvMap)[0m
+Successfully wrote 1 GroupBy objects to /srv/chronon/production
+Successfully wrote 1 Join objects to /srv/chronon/production
+
+[3/6] Running Spark backfill (this may take several minutes)...
+	at org.apache.derby.impl.services.monitor.FileMonitor.startModule(Unknown Source)
+	at org.apache.derby.iapi.services.monitor.Monitor.bootServiceModule(Unknown Source)
+	at org.apache.derby.impl.db.BasicDatabase$5.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at org.apache.derby.impl.db.BasicDatabase.bootServiceModule(Unknown Source)
+	at org.apache.derby.impl.db.BasicDatabase.bootStore(Unknown Source)
+	at org.apache.derby.impl.db.BasicDatabase.boot(Unknown Source)
+	at org.apache.derby.impl.services.monitor.BaseMonitor.boot(Unknown Source)
+	at org.apache.derby.impl.services.monitor.TopService.bootModule(Unknown Source)
+	at org.apache.derby.impl.services.monitor.BaseMonitor.bootService(Unknown Source)
+	at org.apache.derby.impl.services.monitor.BaseMonitor.startProviderService(Unknown Source)
+	at org.apache.derby.impl.services.monitor.BaseMonitor.findProviderAndStartService(Unknown Source)
+	at org.apache.derby.impl.services.monitor.BaseMonitor.startPersistentService(Unknown Source)
+	at org.apache.derby.iapi.services.monitor.Monitor.startPersistentService(Unknown Source)
+	at org.apache.derby.impl.jdbc.EmbedConnection$4.run(Unknown Source)
+	at org.apache.derby.impl.jdbc.EmbedConnection$4.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at org.apache.derby.impl.jdbc.EmbedConnection.startPersistentService(Unknown Source)
+	... 201 more
+26/04/07 07:31:01 INFO SparkContext: Invoking stop() from shutdown hook
+26/04/07 07:31:01 INFO SparkUI: Stopped Spark web UI at http://2b40b8568d01:4042
+26/04/07 07:31:01 INFO MapOutputTrackerMasterEndpoint: MapOutputTrackerMasterEndpoint stopped!
+26/04/07 07:31:01 INFO MemoryStore: MemoryStore cleared
+26/04/07 07:31:01 INFO BlockManager: BlockManager stopped
+26/04/07 07:31:01 INFO BlockManagerMaster: BlockManagerMaster stopped
+26/04/07 07:31:01 INFO OutputCommitCoordinator$OutputCommitCoordinatorEndpoint: OutputCommitCoordinator stopped!
+26/04/07 07:31:01 INFO SparkContext: Successfully stopped SparkContext
+26/04/07 07:31:01 INFO ShutdownHookManager: Shutdown hook called
+26/04/07 07:31:01 INFO ShutdownHookManager: Deleting directory /tmp/spark-4e3a1f9d-11ea-43bc-875f-0acde2ae7fa9
+26/04/07 07:31:01 INFO ShutdownHookManager: Deleting directory /tmp/spark-94d396b7-b2a7-4af4-bfd1-9cf3eef9addb
+
+[4/6] Exporting backfilled features...
+ERROR: No backfill output found for team ieee_fraud_slick_quetzal
+Searched for: ieee_fraud_slick_quetzal_fraud_features_v1

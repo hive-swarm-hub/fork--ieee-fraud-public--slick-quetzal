@@ -1,0 +1,77 @@
+=== IEEE-CIS Fraud Features — Chronon Eval ===
+Agent: slick-quetzal | Team: ieee_fraud_slick_quetzal
+
+[1/6] Uploading Chronon definitions (team: ieee_fraud_slick_quetzal)...
+  Uploaded group_bys/ieee_fraud_slick_quetzal/transaction_features.py
+  Uploaded joins/ieee_fraud_slick_quetzal/fraud_features.py
+
+[2/6] Compiling join definition...
+Do you want to update existing env variables in these files? [Y/n]:                 Join Team - [34mieee_fraud_slick_quetzal[0m
+                Join Name - [34mfraud_features.v1[0m
+          Writing Join to - [34m/srv/chronon/production/joins/ieee_fraud_slick_quetzal/fraud_features.v1[0m
+[33m(preserving existing modeToEnvMap)[0m
+             GroupBy Team - [34mieee_fraud[0m
+             GroupBy Name - [34mtransaction_features.v1[0m
+       Writing GroupBy to - [34m/srv/chronon/production/group_bys/ieee_fraud/transaction_features.v1[0m
+[33m(preserving existing modeToEnvMap)[0m
+Successfully wrote 1 GroupBy objects to /srv/chronon/production
+Successfully wrote 1 Join objects to /srv/chronon/production
+
+[3/6] Running Spark backfill (this may take several minutes)...
+26/04/07 07:32:38 INFO InternalParquetRecordWriter: Flushing mem columnStore to file. allocated memory: 70534
+26/04/07 07:32:38 INFO BasicWriteTaskStatsTracker: Expected 3 files, but only saw 2. This could be due to the output format not writing empty files, or files being not immediately visible in the filesystem.
+26/04/07 07:32:38 INFO SparkHadoopMapRedUtil: attempt_202604070732372883541034049127801_0063_m_000123_3140: Not committed because the driver did not authorize commit
+26/04/07 07:32:38 ERROR Utils: Aborting task
+org.apache.spark.executor.CommitDeniedException: attempt_202604070732372883541034049127801_0063_m_000123_3140: Not committed because the driver did not authorize commit
+	at org.apache.spark.mapred.SparkHadoopMapRedUtil$.commitTask(SparkHadoopMapRedUtil.scala:84)
+	at org.apache.spark.internal.io.HadoopMapReduceCommitProtocol.commitTask(HadoopMapReduceCommitProtocol.scala:260)
+	at org.apache.spark.sql.execution.datasources.FileFormatDataWriter.commit(FileFormatDataWriter.scala:79)
+	at org.apache.spark.sql.execution.datasources.FileFormatWriter$.$anonfun$executeTask$1(FileFormatWriter.scala:280)
+	at org.apache.spark.util.Utils$.tryWithSafeFinallyAndFailureCallbacks(Utils.scala:1473)
+	at org.apache.spark.sql.execution.datasources.FileFormatWriter$.executeTask(FileFormatWriter.scala:286)
+	at org.apache.spark.sql.execution.datasources.FileFormatWriter$.$anonfun$write$15(FileFormatWriter.scala:210)
+	at org.apache.spark.scheduler.ResultTask.runTask(ResultTask.scala:90)
+	at org.apache.spark.scheduler.Task.run(Task.scala:131)
+	at org.apache.spark.executor.Executor$TaskRunner.$anonfun$run$3(Executor.scala:497)
+	at org.apache.spark.util.Utils$.tryWithSafeFinally(Utils.scala:1439)
+	at org.apache.spark.executor.Executor$TaskRunner.run(Executor.scala:500)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:750)
+26/04/07 07:32:38 WARN FileOutputCommitter: Could not delete file:/opt/spark/data/ieee_fraud.db/ieee_fraud_slick_quetzal_fraud_features_v1_bootstrap/.spark-staging-d99eaa43-fadf-4c33-ac08-0ae8c8ae92d7/_temporary/0/_temporary/attempt_202604070732372883541034049127801_0063_m_000123_3140
+26/04/07 07:32:38 ERROR FileFormatWriter: Job job_202604070732372883541034049127801_0063 aborted.
+26/04/07 07:32:38 INFO MemoryStore: MemoryStore cleared
+26/04/07 07:32:38 INFO BlockManager: BlockManager stopped
+26/04/07 07:32:38 INFO BlockManagerMaster: BlockManagerMaster stopped
+26/04/07 07:32:38 INFO OutputCommitCoordinator$OutputCommitCoordinatorEndpoint: OutputCommitCoordinator stopped!
+26/04/07 07:32:38 INFO SparkContext: Successfully stopped SparkContext
+26/04/07 07:32:38 INFO ShutdownHookManager: Shutdown hook called
+26/04/07 07:32:38 INFO ShutdownHookManager: Deleting directory /tmp/spark-d94d6da1-d1fe-4ca1-b3c9-9995ab6f8325
+26/04/07 07:32:38 INFO ShutdownHookManager: Deleting directory /tmp/spark-244615e5-b578-48b2-a76d-823c8a06dd85
+
+[4/6] Exporting backfilled features...
+Reading from: /opt/spark/data/ieee_fraud.db/ieee_fraud_slick_quetzal_fraud_features_v1
+Loaded 223738 rows, 19 columns
+Columns: ['card1', 'isFraud', 'ts', 'TransactionDT', 'TransactionAmt', 'TransactionID', 'ieee_fraud_transaction_features_v1_TransactionAmt_sum_3d', 'ieee_fraud_transaction_features_v1_TransactionAmt_sum_7d', 'ieee_fraud_transaction_features_v1_TransactionAmt_sum_14d', 'ieee_fraud_transaction_features_v1_TransactionAmt_sum_30d', 'ieee_fraud_transaction_features_v1_TransactionAmt_count_3d', 'ieee_fraud_transaction_features_v1_TransactionAmt_count_7d', 'ieee_fraud_transaction_features_v1_TransactionAmt_count_14d', 'ieee_fraud_transaction_features_v1_TransactionAmt_count_30d', 'ieee_fraud_transaction_features_v1_TransactionAmt_average_3d', 'ieee_fraud_transaction_features_v1_TransactionAmt_average_7d', 'ieee_fraud_transaction_features_v1_TransactionAmt_average_14d', 'ieee_fraud_transaction_features_v1_TransactionAmt_average_30d', 'ds']
+Exported to /tmp/fraud_features_slick_quetzal.csv
+
+[5/6] Training Lasso and scoring on server...
+Loading backfilled features...
+  223738 rows, 19 columns
+  Fraud rate: 0.0312
+  Feature columns: 13
+  Train: 223738 rows (0.0312 fraud rate)
+/tmp/train_score_slick_quetzal.py:71: RuntimeWarning: Mean of empty slice.
+  print(f"  Test:  {X_test.shape[0]} rows ({y_test.mean():.4f} fraud rate)")
+/usr/local/lib/python3.10/dist-packages/numpy/_core/_methods.py:145: RuntimeWarning: invalid value encountered in scalar divide
+  ret = ret.dtype.type(ret / rcount)
+  Test:  0 rows (nan fraud rate)
+ERROR: No test rows. Check TransactionDT split cutoff.
+---
+auc_pr:           0.000000
+n_features:       0
+n_nonzero:        0
+train_auc_pr:     0.000000
+
+[6/6] Results:
+Score appended to results.tsv
