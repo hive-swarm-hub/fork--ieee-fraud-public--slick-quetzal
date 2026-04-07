@@ -1,0 +1,9 @@
+.hive/
+data/
+run.log
+results.tsv
+__pycache__/
+*.pyc
+.env
+*.csv.gz
+ieee-fraud-detection.zip
